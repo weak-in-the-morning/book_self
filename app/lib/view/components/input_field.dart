@@ -4,19 +4,19 @@ class InputField extends StatelessWidget {
   final String formTitle;
   final String? hintExample;
 
-  InputField({required this.formTitle, this.hintExample});
+  const InputField({super.key, required this.formTitle, this.hintExample});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
         child: Column(
           children: [
             Align(
                 alignment: Alignment.centerLeft,
                 child: Text(formTitle,
-                    style:
-                        TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.normal, fontSize: 15),
                     textAlign: TextAlign.left)),
             SizedBox(
               height: 40,
