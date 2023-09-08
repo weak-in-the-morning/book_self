@@ -1,16 +1,22 @@
 # app
+A Flutter app directory
 
-A new Flutter project.
+状態管理には`flutter`
 
-## Getting Started
+# run
+```
+flutter pub get
+flutter run
+```
 
-This project is a starting point for a Flutter application.
+# before push
+run `flutter analyze`
 
-A few resources to get you started if this is your first Flutter project:
+If you see 'No issues found!', please push to your branch
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# packages
+The installed packages are as follows
+- [sqflite 2.3.0 ](https://pub.dev/packages/sqflite)
+    - flutter内部でsqliteライクなローカルDBを作成する
+- [flutter_hooks 0.20.1 ](https://pub.dev/packages/flutter_hooks)
+    - hooksによる状態管理を可能に
