@@ -11,9 +11,5 @@ jobs:
       - uses: subosito/flutter-action@v2.3.0
         with:
           flutter-version: "3.13.3"
-      - name: move to app dir
-        run: cd app
-      - name: Install packages
-        run: flutter pub get
-      - name: Linter
-        run: flutter analyze
+      - name: do lint check
+        run: cd app && flutter pub get && flutter analyze
