@@ -5,15 +5,16 @@ class Ebooks extends StatelessWidget {
   final String label;
   // final GestureTapCallback onPressed;
 
-  Ebooks({
+  const Ebooks({
+    super.key, 
     required this.label, 
     });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const Text(
+        Text(
               '電子書籍サービス'
             ),
         Row(

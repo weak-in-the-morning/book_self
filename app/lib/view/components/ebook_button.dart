@@ -5,7 +5,8 @@ class EbookButton extends StatelessWidget {
   final String imgSrc;
   // final GestureTapCallback onPressed;
 
-  EbookButton({
+  const EbookButton({
+    super.key, 
     required this.label, 
     required this.imgSrc,
     // required this.onPressed
@@ -18,8 +19,8 @@ class EbookButton extends StatelessWidget {
     //   onTap: () {
     //     },
       TextButton(
-        onPressed: () {print(label);},
-        child: Container(
+        onPressed: () {},
+        child: SizedBox(
           width: 96,
           height: 96,
           child: Column(
