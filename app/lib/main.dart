@@ -1,60 +1,99 @@
-import 'package:app/view/design_system.dart';
-import 'package:app/view/pages/setting.dart';
+import 'package:app/logic/Database_Helper.dart';
 import 'package:flutter/material.dart';
-import 'package:app/view/pages/bookshelf.dart';
-import 'package:app/view/pages/index.dart';
-import 'package:app/view/pages/register.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Book Self',
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    return MaterialApp(
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  // DatabaseHelper クラスのインスタンス取得
+  final dbHelper = DatabaseHelper.instance;
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var _pageIndex = 0;
-
-  final List<Widget> _pages = [
-    const Index(),
-    const Register(),
-    const Bookshelf(),
-    const Setting(),
-  ];
-
+  // homepage layout
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent(
-        title: 'BookSelef',
+      appBar: AppBar(
+        title: Text('SQLiteデモ'),
       ),
-      body: _pages[_pageIndex],
-      bottomNavigationBar: BottomAppBarComponent(
-        currentIndex: _pageIndex,
-        onTap: (index) {
-          setState(() {
-            _pageIndex = index;
-          });
-        },
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            ElevatedButton(
+              child: Text(
+                '登録',
+                style: TextStyle(fontSize: 35),
+              ),
+              onPressed: _insert,
+            ),
+            ElevatedButton(
+              child: Text(
+                '照会',
+                style: TextStyle(fontSize: 35),
+              ),
+              onPressed: _query,
+            ),
+            ElevatedButton(
+              child: Text(
+                '更新',
+                style: TextStyle(fontSize: 35),
+              ),
+              onPressed: _update,
+            ),
+            ElevatedButton(
+              child: Text(
+                '削除',
+                style: TextStyle(fontSize: 35),
+              ),
+              onPressed: _delete,
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  // 登録ボタンクリック
+  void _insert() async {
+    // row to insert
+    BookData book;
+
+    final id = await dbHelper.insert(book);
+    print('登録しました。id: $id');
+  }
+
+  // 照会ボタンクリック
+  void _query() async {
+    final allRows = await dbHelper.queryAllRows();
+    print('全てのデータを照会しました。');
+    allRows.forEach(print);
+  }
+
+  // 更新ボタンクリック
+  void _update() async {
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnId: 1,
+      DatabaseHelper.columnName: '鈴木　一郎',
+      DatabaseHelper.columnNum: 48
+    };
+    final rowsAffected = await dbHelper.update(row);
+    print('更新しました。 ID：$rowsAffected ');
+  }
+
+  // 削除ボタンクリック
+  void _delete() async {
+    final id = await dbHelper.queryRowCount();
+    final rowsDeleted = await dbHelper.delete(id!);
+    print('削除しました。 $rowsDeleted ID: $id');
   }
 }

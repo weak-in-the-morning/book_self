@@ -1,0 +1,46 @@
+main で必要そうな処理
+
+dbを扱うクラスで DatabaseHelper クラスのインスタンスを取得する
+    final dbHelper = DatabaseHelper.instance;
+
+入力用の変数を宣言する（例）
+    String name = "";
+    int num = -1;
+    String service = "";
+    bool has_read = false;
+    bool favorite = false;
+    String tag = "";
+    String memo = "";
+    DateTime created_at = DateTime(2020, 10, 2, 12, 10); // 適当な初期値
+    DateTime updated_at = DateTime(2020, 10, 2, 12, 10); // 適当な初期値
+    String url_search = "";
+    String url_image = "";
+
+insert
+入力を実行する時
+    登録した時間を取得する
+    created_at = DateTime.now();
+    updated_at = DateTime.now();
+
+    DateTime型, bool型 を DB に格納することができないので変換する
+
+    データベースに格納する列を Map型の row として宣言する
+    Map<String, dynamic> row = {
+        DatabaseHelper.columnName: name,
+        DatabaseHelper.columnNum: num,
+    }
+
+    関数を実行する
+    await dbHelper.insert(row);
+
+query
+全情報の照会
+    allRows に全ての列を格納
+    final allRows = await dbHelper.queryAllRows();
+
+updated
+情報の更新
+
+delete
+削除
+
