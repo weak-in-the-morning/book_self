@@ -34,9 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
   var _pageIndex = 0;
 
   final List<Widget> _pages = [
-    const Index(),
-    const Register(),
     const Bookshelf(),
+    const Register(),
+    const Index(),
     const Setting(),
   ];
 
