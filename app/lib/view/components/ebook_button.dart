@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class EbookButton extends StatelessWidget {
+class EbookButton extends HookWidget {
   final String label;
   final String imgSrc;
 
@@ -12,13 +13,25 @@ class EbookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSelected = useState<bool>(false);
     return 
       TextButton(
-        onPressed: () {},
-        child: SizedBox(
+        onPressed: () {
+          isSelected.value = !isSelected.value;
+        },
+        child: Container(
+           decoration: BoxDecoration(
+           border:  Border.all(
+              width: 2,
+              color: isSelected.value ? Colors.grey : Colors.black.withOpacity(0)
+              ), 
+            borderRadius: BorderRadius.circular(5) 
+          ), 
           width: 96,
           height: 96,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
                 imgSrc,
