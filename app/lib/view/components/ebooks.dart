@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:app/view/components/ebook_button.dart';
 
 class Ebooks extends StatelessWidget {
-  final String label;
+  // final String label;
   // final GestureTapCallback onPressed;
 
   const Ebooks({
     super.key, 
-    required this.label, 
+    // required this.label, 
     });
 
   @override
