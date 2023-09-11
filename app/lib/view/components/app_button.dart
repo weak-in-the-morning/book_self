@@ -1,6 +1,15 @@
 import 'package:app/data/colors.dart';
 import 'package:flutter/material.dart';
 
+/// AppButtonのコンポーネントです
+/// factoryで実装しているので呼び出し方は以下の2つです.
+///
+/// 黄色背景緑文字を使う時
+/// AppButton.filled(label: '', onTap: (){処理内容})
+///
+/// 緑背景縁取りありを使う時
+/// AppButton.outlined(label:'', onTap: (){処理内容})
+
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
