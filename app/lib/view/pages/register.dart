@@ -18,7 +18,7 @@ class Register extends StatelessWidget {
         (AppButton.filled(
             label: '登録',
             onTap: () {
-              String text = controller1.text;
+              // String text = controller1.text;
               // debugPrint("入力内容は" + text);
             })),
       ],
