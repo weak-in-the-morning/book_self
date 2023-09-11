@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
   final String formTitle;
-  final String? hintExample;
+  final String? hintText;
+  final TextEditingController controller;
 
-  const InputField({super.key, required this.formTitle, this.hintExample});
+  const InputField(
+      {super.key,
+      required this.formTitle,
+      required this.controller,
+      this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +32,9 @@ class InputField extends StatelessWidget {
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  hintText: hintExample,
+                  hintText: hintText,
                 ),
+                controller: controller,
               ),
             )
           ],
