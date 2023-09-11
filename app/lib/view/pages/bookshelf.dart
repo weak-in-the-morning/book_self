@@ -11,10 +11,6 @@ class Bookshelf extends StatelessWidget {
             image: AssetImage('assets/images/backgroundOfBookshelf.jpg'),
             fit: BoxFit.cover,
         )),
-        children: [
-          Text('My本棚'),
-          
-        ],
     );
   }
 }
