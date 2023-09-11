@@ -18,8 +18,8 @@ const sampleImgPath3 =
 
 const sampleLabel3 = 'ラブライブ';
 
-class Index extends StatelessWidget {
-  const Index({super.key});
+class BookList extends StatelessWidget {
+  const BookList({super.key});
 
   @override
   Widget build(BuildContext context) {
