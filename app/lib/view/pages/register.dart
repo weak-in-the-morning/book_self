@@ -15,12 +15,11 @@ class Register extends StatelessWidget {
     return Column(
       children: [
         InputField(formTitle: '本のタイトル', controller: controller1),
-        // InputField(formTitle: '巻数', controller: controller2),
         (AppButton.filled(
             label: '登録',
             onTap: () {
               String text = controller1.text;
-              debugPrint("入力内容は" + text);
+              // debugPrint("入力内容は" + text);
             })),
       ],
     );
