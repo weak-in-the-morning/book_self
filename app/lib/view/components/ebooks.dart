@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:app/view/components/ebook_button.dart';
 
 class Ebooks extends StatelessWidget {
-  
+
   const Ebooks({
     super.key, 
     });
 
   @override
   Widget build(BuildContext context) {
+
     return const Column(
       children: [
         Text(
@@ -20,7 +21,7 @@ class Ebooks extends StatelessWidget {
 
             EbookButton(
               label: 'まんがセゾン', 
-              imgSrc: 'assets/images/Sezon.jpg'
+              imgSrc: 'assets/images/Sezon.jpg',
             ),
             EbookButton(
               label: 'Kindle', 
