@@ -5,6 +5,16 @@ class Bookshelf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Bookshelf');
+    return Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+            image: AssetImage('assets/images/backgroundOfBookshelf.jpg'),
+            fit: BoxFit.cover,
+        )),
+        children: [
+          Text('My本棚'),
+          
+        ],
+    );
   }
 }
