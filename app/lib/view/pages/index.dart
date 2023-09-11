@@ -28,15 +28,15 @@ class Index extends StatelessWidget {
       children: [
         // sample画像を繰り返し表示する3種類 * 50 = 150個描画されている
         for (int i = 0; i < 50; i++) ...[
-          _book(
+          const _book(
             imagePath: sampleImgPath,
             label: sampleLabel,
           ),
-          _book(
+          const _book(
             imagePath: sampleImgPath2,
             label: sampleLabel2,
           ),
-          _book(
+          const _book(
             imagePath: sampleImgPath3,
             label: sampleLabel3,
           ),
@@ -46,8 +46,9 @@ class Index extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class _book extends StatelessWidget {
-  const _book({super.key, required this.imagePath, required this.label});
+  const _book({required this.imagePath, required this.label});
 
   final String imagePath;
   final String label;
