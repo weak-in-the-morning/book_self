@@ -1,3 +1,4 @@
+import 'package:app/view/components/books_matrix.dart';
 import 'package:flutter/material.dart';
 
 class Bookshelf extends StatelessWidget {
@@ -8,9 +9,12 @@ class Bookshelf extends StatelessWidget {
     return Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-            image: AssetImage('assets/images/backgroundOfBookshelf.jpg'),
-            fit: BoxFit.cover,
+          image: AssetImage('assets/images/backgroundOfBookshelf.jpg'),
+          fit: BoxFit.cover,
         )),
-    );
+      child: const Center(
+        child: BooksMatrix()
+        )
+      );
   }
 }
