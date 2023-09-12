@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/view/components/app_button.dart';
 import 'package:app/view/components/input_field.dart';
-import 'package:app/view/components/ebooks.dart';
-import 'package:app/view/components/ebook_button.dart';
 
 ///電子書籍のサイト4つ：まんがセゾン、Kindle、楽天ブックス、DMMブックス
 
@@ -26,7 +24,7 @@ class _Register extends State<Register> {
     'assets/images/DMMBooks.png'
   ];
 
-  Widget EbookButton({
+  Widget eBookButton({
     required int index,
     required String label,
     required String imgSrc,
@@ -56,7 +54,7 @@ class _Register extends State<Register> {
               width: 48,
               height: 48,
             ),
-            Text(label, style: TextStyle(fontSize: 10)),
+            Text(label, style: const TextStyle(fontSize: 10)),
           ],
         ),
       ),
@@ -109,7 +107,7 @@ class _Register extends State<Register> {
           children: [
             ...List.generate(
               bookStores.length,
-              (index) => EbookButton(
+              (index) => eBookButton(
                 index: index,
                 label: bookStores[index],
                 imgSrc: bookStoreImages[index],
