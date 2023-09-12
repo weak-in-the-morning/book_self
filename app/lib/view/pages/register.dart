@@ -5,6 +5,7 @@ import 'package:app/view/components/input_field.dart';
 //import 'package:app/view/components/ebook_button.dart';
 
 class Register extends StatefulWidget {
+  const Register({super.key});
   @override
   State<Register> createState() => _Register();
 }
