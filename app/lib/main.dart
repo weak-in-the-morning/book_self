@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _pages = [
     const Bookshelf(),
-    const Register(),
+    Register(),
     const BookList(),
     const Setting(),
   ];
