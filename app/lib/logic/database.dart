@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 
 class DatabaseHelper {
-  static const String _databaseName = "BookSelfDatabase3.db"; // DB名
+  static const String _databaseName = "BookSelfDatabase1.db"; // DB名
   static const int _databaseVersion = 1; // スキーマのバージョン指定
 
   final String table = 'books'; // テーブル名
@@ -107,25 +107,10 @@ class DatabaseHelper {
   // 照会処理
   Future<List<BookData>> queryAllRows() async {
     Database? db = await instance.database;
-    List<Map> rows = await db!.query(table);
+    List<Map<String, dynamic>> rows = await db!.query(table);
     List<BookData> books = [];
-    bool hasRead;
-    bool favorite;
-    for (Map row in rows) {
-      hasRead = (row[columnHasRead] == 1) ? true : false;
-      favorite = (row[columnFavorite] == 1) ? true : false;
-      BookData book = BookData(
-        id: row[columnId],
-        name: row[columnName],
-        num: row[columnNum],
-        service: row[columnService],
-        hasRead: hasRead,
-        favorite: favorite,
-        tag: row[columnTag],
-        memo: row[columnMemo],
-        urlSearch: row[columnUrlSearch],
-        urlImage: row[columnUrlImage],
-      );
+    for (Map<String, dynamic> row in rows) {
+      BookData book = await mapToBookData(row);
       books.add(book);
     }
     return books;
@@ -138,29 +123,15 @@ class DatabaseHelper {
         await db!.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
-  // レコードの検索
-  Future<List<BookData>?> searchName(String name) async {
+  // 本の名前から曖昧検索
+  Future<List<BookData>> searchName(String name) async {
     Database? db = await instance.database;
-    List<Map> rows = await db!.rawQuery(
-        "SELECT * FROM $table WHERE $columnName LIKE ? ORDER BY $columnUpdated");
+    List<Map<String, dynamic>> rows = await db!.rawQuery(
+        "SELECT * FROM $table WHERE $columnName LIKE ? ORDER BY $columnUpdated",
+        ['%$name%']);
     List<BookData> books = [];
-    bool hasRead;
-    bool favorite;
-    for (Map row in rows) {
-      hasRead = (row[columnHasRead] == 1) ? true : false;
-      favorite = (row[columnFavorite] == 1) ? true : false;
-      BookData book = BookData(
-        id: row[columnId],
-        name: row[columnName],
-        num: row[columnNum],
-        service: row[columnService],
-        hasRead: hasRead,
-        favorite: favorite,
-        tag: row[columnTag],
-        memo: row[columnMemo],
-        urlSearch: row[columnUrlSearch],
-        urlImage: row[columnUrlImage],
-      );
+    for (Map<String, dynamic> row in rows) {
+      BookData book = await mapToBookData(row);
       books.add(book);
     }
     return books;
@@ -189,7 +160,7 @@ class DatabaseHelper {
   }
 
   // 削除処理
-  Future<int> deleteId(int id) async {
+  Future<int> deleteId(String id) async {
     Database? db = await instance.database;
     return await db!.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
@@ -197,5 +168,23 @@ class DatabaseHelper {
   Future<int> deleteName(String name) async {
     Database? db = await instance.database;
     return await db!.delete(table, where: '$columnName = ?', whereArgs: [name]);
+  }
+
+  Future<BookData> mapToBookData(Map<String, dynamic> row) async {
+    bool hasRead = (row[columnHasRead] == 1) ? true : false;
+    bool favorite = (row[columnFavorite] == 1) ? true : false;
+    BookData book = BookData(
+      id: row[columnId],
+      name: row[columnName],
+      num: row[columnNum],
+      service: row[columnService],
+      hasRead: hasRead,
+      favorite: favorite,
+      tag: row[columnTag],
+      memo: row[columnMemo],
+      urlSearch: row[columnUrlSearch],
+      urlImage: row[columnUrlImage],
+    );
+    return book;
   }
 }

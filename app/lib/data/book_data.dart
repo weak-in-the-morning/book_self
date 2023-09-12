@@ -23,4 +23,9 @@ class BookData {
     required this.urlSearch,
     this.urlImage,
   });
+
+  @override
+  String toString() {
+    return 'BookData{id: $id, name: $name, num: $num, service: $service, hasRead: $hasRead, favorite: $favorite, tag: $tag, memo: $memo, urlSearch: $urlSearch, urlImage: $urlImage}';
+  }
 }
