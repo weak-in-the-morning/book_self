@@ -10,13 +10,19 @@ class Register extends StatefulWidget {
   State<Register> createState() => _Register();
 }
 
-// enum BookStore{
-
-// }
-
 class _Register extends State<Register> {
-  int? selectedBookstoreIndex;
-  List<String> bookStores = ['まんがセゾン', 'Kindle', '楽天ブックス', 'DMMブックス'];
+  //どの電子書籍選んでるかのint、初期値は紙
+  int selectedBookstoreIndex = 4;
+  String name = "";
+  int num = -1;
+  String service = "";
+  bool hasRead = false;
+  bool favorite = false;
+  String tag = "";
+  String memo = "";
+  String urlSearch = "";
+
+  List<String> bookStores = ['まんがセゾン', 'Kindle', '楽天ブックス', 'DMMブックス', '紙の本'];
   List<String> bookStoreImages = [
     'assets/images/Sezon.jpg',
     'assets/images/Kindle.png',
@@ -24,6 +30,7 @@ class _Register extends State<Register> {
     'assets/images/DMMBooks.png'
   ];
 
+  //電子書籍のボタン
   Widget eBookButton({
     required int index,
     required String label,
@@ -61,28 +68,6 @@ class _Register extends State<Register> {
     );
   }
 
-  Widget button({required String text, required int index}) {
-    return InkWell(
-      splashColor: Colors.cyanAccent,
-      onTap: () {
-        setState(() {
-          selectedBookstoreIndex = index;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        color: index == selectedBookstoreIndex ? Colors.blue : Colors.white,
-        child: Text(
-          text,
-          style: TextStyle(
-            color:
-                index == selectedBookstoreIndex ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final TextEditingController controllerTitle =
@@ -90,23 +75,23 @@ class _Register extends State<Register> {
     final TextEditingController controllerNum =
         TextEditingController(text: '初期値');
     final TextEditingController controllerURL =
-        TextEditingController(text: '初期値');
+        TextEditingController(text: '紙の本');
     final TextEditingController controllerTag =
         TextEditingController(text: '初期値');
     final TextEditingController controllerMemo =
         TextEditingController(text: '初期値');
 
-    //ボタンのウィジェット
-
+    //画面本体
     return SingleChildScrollView(
         child: Column(
       children: [
         InputField(formTitle: '本のタイトル', controller: controllerTitle),
         InputField(formTitle: '巻数', controller: controllerNum),
+        const Text('電子書籍サービス一覧'),
         Row(
           children: [
             ...List.generate(
-              bookStores.length,
+              bookStores.length - 1,
               (index) => eBookButton(
                 index: index,
                 label: bookStores[index],
@@ -115,16 +100,41 @@ class _Register extends State<Register> {
             ),
           ],
         ),
+        //ここあとで紙の時は入力不可に
         InputField(formTitle: 'URL', controller: controllerURL),
         InputField(formTitle: 'タグ', controller: controllerTag),
         InputField(formTitle: 'メモ', controller: controllerMemo),
+        Row(
+          children: [
+            IconButton(
+              icon: (favorite
+                  ? Icon(
+                      Icons.star_rounded,
+                      color: Colors.yellow,
+                    )
+                  : Icon(
+                      Icons.star_border_rounded,
+                      color: Colors.yellow,
+                    )),
+              onPressed: () {
+                setState(() {
+                  favorite = !favorite;
+                });
+              },
+              iconSize: 50,
+            ),
+          ],
+        ),
         (AppButton.filled(
             label: '登録',
             onTap: () {
               //ここに登録ボタン押した時の処理
-              //したはデバッグの時使ってた処理
-              // String text = controller1.text;
-              // debugPrint("入力内容は" + text);
+              name = controllerTitle.text;
+              num = int.parse(controllerNum.text);
+              service = bookStores[selectedBookstoreIndex];
+              urlSearch =
+                  (controllerURL.text == '紙の本') ? '' : controllerURL.text;
+              tag = controllerTag.text;
             })),
       ],
     ));
