@@ -106,6 +106,7 @@ class _Register extends State<Register> {
         InputField(formTitle: 'メモ', controller: controllerMemo),
         Row(
           children: [
+            //お気に入りボタン
             IconButton(
               icon: (favorite
                   ? Icon(
@@ -124,6 +125,7 @@ class _Register extends State<Register> {
               iconSize: 50,
             ),
           ],
+          //既読ボタン
         ),
         (AppButton.filled(
             label: '登録',
