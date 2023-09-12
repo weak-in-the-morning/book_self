@@ -10,12 +10,25 @@ class BooksRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    final rowGap = MediaQuery.of(context).size.height / 72;
+    return Row(
       children: [
-        BookInBookshelf(imagePath: 'https://image.mechacomi.jp/contents/001fr2hw.jpg'),
-        BookInBookshelf(imagePath: 'https://image.mechacomi.jp/contents/001fr2hx.jpg'),
-        BookInBookshelf(imagePath: 'https://image.mechacomi.jp/contents/001fr2hy.jpg'),
-        BookInBookshelf(imagePath: 'https://image.mechacomi.jp/contents/001fr2hz.jpg'),
+        Padding(
+          padding: EdgeInsets.only(right: rowGap),
+          child: BookInBookshelf(imagePath: imagePaths[0]),
+        ),
+        Padding(
+          padding: EdgeInsets.only(right: rowGap),
+          child: BookInBookshelf(imagePath: imagePaths[1]),
+        ),
+        Padding(
+          padding: EdgeInsets.only(right: rowGap),
+          child: BookInBookshelf(imagePath: imagePaths[2]),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 0.0),
+          child: BookInBookshelf(imagePath: imagePaths[3]),
+        ),
       ]
     );
   }
