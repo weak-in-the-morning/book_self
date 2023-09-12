@@ -92,7 +92,8 @@ class _BookListState extends State<BookList> {
   }
 
   _updateBooks() {
-    if (searchFieldController.text.isEmpty) {
+    if (searchFieldController.text.isEmpty ||
+        searchFieldController.text == '') {
       setState(() {
         booksFuture = dbHelper.queryAllRows();
       });
