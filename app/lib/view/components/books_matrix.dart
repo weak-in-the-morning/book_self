@@ -6,56 +6,45 @@ class BooksMatrix extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gap = MediaQuery.of(context).size.height / 72;
+    final gap = 40.0;
     final topGap = MediaQuery.of(context).size.height / 12;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-        children: [
-            Padding(
-              padding: EdgeInsets.only(top: topGap),
-              child: const BooksRow(imagePaths: [
-                  'https://image.mechacomi.jp/contents/001fr2hw.jpg',
-                  'https://image.mechacomi.jp/contents/001fr2hx.jpg',
-                  'https://image.mechacomi.jp/contents/001fr2hy.jpg',
-                  'https://image.mechacomi.jp/contents/001fr2hz.jpg',
-                ]
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: gap),
-              child: const BooksRow(imagePaths: [
-                  'https://image.mechacomi.jp/contents/002mciea.jpg',
-                  'https://image.mechacomi.jp/contents/511ecbe0-02ac-4fd1-9e33-e02fc67fc065.jpg',
-                  'https://image.mechacomi.jp/contents/002aa358-c13e-4982-85df-d653e4a025db.jpg',
-                  'https://image.mechacomi.jp/contents/31473bc5-f79d-477a-94e6-dd68c6fc3922.jpg',
-                ]
-              )
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: gap),
-              child: const BooksRow(imagePaths: [
-                  'https://image.mechacomi.jp/contents/001fr4ui.jpg',
-                  'https://image.mechacomi.jp/contents/001fr4uj.jpg',
-                  'https://image.mechacomi.jp/contents/001fr4uk.jpg',
-                  'https://image.mechacomi.jp/contents/001fr4ul.jpg',
-                ]
-              )
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: gap),
-              child: const BooksRow(imagePaths: [
-                  'https://image.mechacomi.jp/contents/001t1cxw.jpg',
-                  'https://image.mechacomi.jp/contents/001uvekb.jpg',
-                  'https://image.mechacomi.jp/contents/001ycldh.jpg',
-                  'https://image.mechacomi.jp/contents/0021rdz4.jpg',
-                ]
-              )
-            )
-        ]
-      ),]
-    );
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Column(children: [
+        Padding(
+          padding: EdgeInsets.only(top: topGap),
+          child: const BooksRow(imagePaths: [
+            'https://image.mechacomi.jp/contents/002cwtgk.jpg',
+            'https://image.mechacomi.jp/contents/002cwtgl.jpg',
+            'https://image.mechacomi.jp/contents/002cwtgm.jpg',
+            'https://image.mechacomi.jp/contents/002cwtgn.jpg',
+          ]),
+        ),
+        Padding(
+            padding: EdgeInsets.only(top: gap),
+            child: const BooksRow(imagePaths: [
+              'https://image.mechacomi.jp/contents/0027b2zi.jpg',
+              'https://image.mechacomi.jp/contents/002ba6bb.jpg',
+              'https://image.mechacomi.jp/contents/002f7nkl.jpg',
+              'https://image.mechacomi.jp/contents/002hh21c.jpg',
+            ])),
+        Padding(
+            padding: EdgeInsets.only(top: gap),
+            child: const BooksRow(imagePaths: [
+              'https://image.mechacomi.jp/contents/ee70128a-98c5-46dc-be2e-cb76d1738ff0.jpg',
+              'https://image.mechacomi.jp/contents/e8b1e906-ad23-409f-ac48-c99d08b18bbf.jpg',
+              'https://image.mechacomi.jp/contents/6a6c58aa-1d09-48af-adae-ebb0c6f42950.jpg',
+              'https://image.mechacomi.jp/titles/538376.jpg',
+            ])),
+        Padding(
+            padding: EdgeInsets.only(top: gap),
+            child: const BooksRow(imagePaths: [
+              'https://image.mechacomi.jp/contents/002kfyu2.jpg',
+              'https://image.mechacomi.jp/contents/002kfyu4.jpg',
+              'https://image.mechacomi.jp/contents/002kfyu6.jpg',
+              'https://image.mechacomi.jp/contents/002kfyu8.jpg',
+            ]))
+      ]),
+    ]);
   }
 }

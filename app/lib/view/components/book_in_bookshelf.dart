@@ -5,21 +5,20 @@ class BookInBookshelf extends StatelessWidget {
   final String imagePath;
 
   const BookInBookshelf({
-    super.key, 
-    required this.imagePath, 
-    });
+    super.key,
+    required this.imagePath,
+  });
 
   @override
   Widget build(BuildContext context) {
     final mediaWidth = MediaQuery.of(context).size.width;
     final mediaHeight = MediaQuery.of(context).size.height;
-    final imageWidth = (mediaWidth - mediaWidth * 5 / 24) / 4;
-    final imageHeight = (mediaHeight - mediaHeight * 5 / 16) / 4;
+    final imageWidth = 70.0;
+    final imageHeight = 100.0;
     final dialogImageWidth = mediaWidth - 32;
 
-    return 
-      GestureDetector(
-        onTap: () => showDialog(
+    return GestureDetector(
+      onTap: () => showDialog(
         context: context,
         builder: (BuildContext context) {
           return Dialog(
@@ -55,11 +54,10 @@ class BookInBookshelf extends StatelessWidget {
           );
         },
       ),
-
       child: Container(
-          decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2), 
-        ), 
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2),
+        ),
         width: imageWidth,
         height: imageHeight,
         child: Image.network(
@@ -71,4 +69,3 @@ class BookInBookshelf extends StatelessWidget {
     );
   }
 }
-
