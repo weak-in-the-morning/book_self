@@ -6,7 +6,7 @@ class BooksMatrix extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gap = 40.0;
+    const gap = 40.0;
     final topGap = MediaQuery.of(context).size.height / 12;
 
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [

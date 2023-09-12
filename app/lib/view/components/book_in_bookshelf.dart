@@ -12,9 +12,9 @@ class BookInBookshelf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaWidth = MediaQuery.of(context).size.width;
-    final mediaHeight = MediaQuery.of(context).size.height;
-    final imageWidth = 70.0;
-    final imageHeight = 100.0;
+    // final mediaHeight = MediaQuery.of(context).size.height;
+    const imageWidth = 70.0;
+    const imageHeight = 100.0;
     final dialogImageWidth = mediaWidth - 32;
 
     return GestureDetector(
