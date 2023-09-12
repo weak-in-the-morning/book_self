@@ -23,8 +23,9 @@ class BookList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const axisCount = 3;
     return GridView.count(
-      crossAxisCount: 4,
+      crossAxisCount: axisCount,
       children: [
         // sample画像を繰り返し表示する3種類 * 50 = 150個描画されている
         for (int i = 0; i < 50; i++) ...[
@@ -54,8 +55,8 @@ class _book extends StatelessWidget {
   final String label;
   @override
   Widget build(BuildContext context) {
-    final imgWidth = MediaQuery.of(context).size.width / 4 - 64;
-    final dialogImageWidth = MediaQuery.of(context).size.width - 32;
+    final imgWidth = MediaQuery.of(context).size.width / 8;
+    final dialogImageWidth = MediaQuery.of(context).size.width / 2;
     return GestureDetector(
       onTap: () => showDialog(
         context: context,
@@ -93,20 +94,24 @@ class _book extends StatelessWidget {
           );
         },
       ),
-      child: Column(
-        children: [
-          Transform.rotate(
-            angle: 10 * pi / 180,
-            child: Image.network(
-              imagePath,
-              width: imgWidth,
-              height: imgWidth * 2,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12.0),
+        child: Column(
+          children: [
+            Transform.rotate(
+              angle: 10 * pi / 180,
+              child: Image.network(
+                imagePath,
+                width: imgWidth,
+                height: imgWidth * 2,
+              ),
             ),
-          ),
-          Text(
-            label,
-          )
-        ],
+            Text(
+              label,
+              style: const TextStyle(fontSize: 12)
+            )
+          ],
+        ),
       ),
     );
   }
