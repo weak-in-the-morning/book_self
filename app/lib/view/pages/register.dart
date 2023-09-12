@@ -1,3 +1,5 @@
+import 'package:app/data/book_data.dart';
+import 'package:app/logic/database.dart';
 import 'package:flutter/material.dart';
 import 'package:app/view/components/app_button.dart';
 import 'package:app/view/components/input_field.dart';
@@ -79,7 +81,7 @@ class _Register extends State<Register> {
     final TextEditingController controllerTitle =
         TextEditingController(text: '初期値');
     final TextEditingController controllerNum =
-        TextEditingController(text: '初期値');
+        TextEditingController(text: '1');
     final TextEditingController controllerURL =
         TextEditingController(text: '紙の本は不要');
     final TextEditingController controllerTag =
@@ -87,12 +89,20 @@ class _Register extends State<Register> {
     final TextEditingController controllerMemo =
         TextEditingController(text: '初期値');
 
-    //画面本体
+    /// 画面本体
     return SingleChildScrollView(
         child: Column(
       children: [
-        InputField(formTitle: '本のタイトル', controller: controllerTitle),
-        InputField(formTitle: '巻数', controller: controllerNum),
+        InputField(
+          formTitle: '本のタイトル',
+          controller: controllerTitle,
+          isSelectedEbook: true,
+        ),
+        InputField(
+          formTitle: '巻数',
+          controller: controllerNum,
+          isSelectedEbook: true,
+        ),
         const Text('電子書籍サービス一覧'),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -113,8 +123,16 @@ class _Register extends State<Register> {
           controller: controllerURL,
           isSelectedEbook: selectedBookstoreIndex != 4,
         ),
-        InputField(formTitle: 'タグ', controller: controllerTag),
-        InputField(formTitle: 'メモ', controller: controllerMemo),
+        InputField(
+          formTitle: 'タグ',
+          controller: controllerTag,
+          isSelectedEbook: true,
+        ),
+        InputField(
+          formTitle: 'メモ',
+          controller: controllerMemo,
+          isSelectedEbook: true,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -152,7 +170,7 @@ class _Register extends State<Register> {
         ),
         (AppButton.filled(
             label: '登録',
-            onTap: () {
+            onTap: () async {
               //ここに登録ボタン押した時の処理
               name = controllerTitle.text;
               num = int.parse(controllerNum.text);
@@ -161,6 +179,18 @@ class _Register extends State<Register> {
                   (controllerURL.text == '紙の本は不要') ? '' : controllerURL.text;
               tag = controllerTag.text;
               memo = controllerMemo.text;
+              await DatabaseHelper.instance.insert(
+                BookData(
+                  name: name,
+                  num: num,
+                  service: service,
+                  hasRead: hasRead,
+                  favorite: favorite,
+                  tag: tag,
+                  memo: memo,
+                  urlSearch: urlSearch,
+                ),
+              );
             })),
       ],
     ));
