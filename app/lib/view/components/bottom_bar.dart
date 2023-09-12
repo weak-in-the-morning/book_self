@@ -41,13 +41,6 @@ class BottomAppBarComponent extends StatelessWidget {
               size: 36,
             ),
             label: 'Index'),
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-              color: AppColors.ecruBeige,
-              size: 36,
-            ),
-            label: 'Setting'),
       ],
       backgroundColor: AppColors.cobaltGreen,
       type: BottomNavigationBarType.fixed,

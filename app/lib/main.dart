@@ -1,5 +1,4 @@
 import 'package:app/view/design_system.dart';
-import 'package:app/view/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:app/view/pages/bookshelf.dart';
 import 'package:app/view/pages/book_list.dart';
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Book Self',
+      title: 'BookSelf',
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -37,14 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
     const Bookshelf(),
     const Register(),
     const BookList(),
-    const Setting(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarComponent(
-        title: 'BookSelef',
+        title: 'BookSelf',
       ),
       body: _pages[_pageIndex],
       bottomNavigationBar: BottomAppBarComponent(
