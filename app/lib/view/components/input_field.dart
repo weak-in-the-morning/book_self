@@ -4,12 +4,15 @@ class InputField extends StatelessWidget {
   final String formTitle;
   final String? hintText;
   final TextEditingController controller;
+  //紙の本かどうか
+  final bool? isSelectedEbook;
 
   const InputField(
       {super.key,
       required this.formTitle,
       required this.controller,
-      this.hintText});
+      this.hintText,
+      this.isSelectedEbook = false});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,7 @@ class InputField extends StatelessWidget {
             SizedBox(
               height: 40,
               child: TextFormField(
+                enabled: isSelectedEbook,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
