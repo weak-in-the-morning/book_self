@@ -1,4 +1,5 @@
 class BookData {
+  String id;
   String name;
   int num;
   String service;
@@ -10,6 +11,8 @@ class BookData {
   String urlImage;
 
   BookData({
+    // uuidをデフォルトで作成できないので空文字列で仮で置く
+    this.id = "",
     required this.name,
     required this.num,
     required this.service,
