@@ -5,22 +5,22 @@ class BookData {
   String service;
   bool hasRead;
   bool favorite;
-  String tag;
-  String memo;
+  String? tag;
+  String? memo;
   String urlSearch;
-  String urlImage;
+  String? urlImage;
 
   BookData({
-    // uuidをデフォルトで作成できないので空文字列で仮で置く
+    // 0で仮で置く
     this.id = "",
     required this.name,
     required this.num,
     required this.service,
     required this.hasRead,
     required this.favorite,
-    required this.tag,
-    required this.memo,
+    this.tag,
+    this.memo,
     required this.urlSearch,
-    required this.urlImage,
+    this.urlImage,
   });
 }

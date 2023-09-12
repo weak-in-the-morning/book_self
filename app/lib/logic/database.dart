@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 
 class DatabaseHelper {
-  static const String _databaseName = "BookSelfDatabase.db"; // DB名
+  static const String _databaseName = "BookSelfDatabase3.db"; // DB名
   static const int _databaseVersion = 1; // スキーマのバージョン指定
 
   final String table = 'books'; // テーブル名
@@ -63,7 +63,7 @@ class DatabaseHelper {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $columnId TEXT PRIMARY KEY,
             $columnName TEXT NOT NULL,
             $columnNum INTEGER NOT NULL,
             $columnService TEXT NOT NULL,
@@ -138,12 +138,33 @@ class DatabaseHelper {
         await db!.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
-  /* // レコードの検索
+  // レコードの検索
   Future<List<BookData>?> searchName(String name) async {
     Database? db = await instance.database;
-    List<Map> results =
-        await db!.query(table, where: "name = ?", whereArgs: [name]);
-  } */
+    List<Map> rows = await db!.rawQuery(
+        "SELECT * FROM $table WHERE $columnName LIKE ? ORDER BY $columnUpdated");
+    List<BookData> books = [];
+    bool hasRead;
+    bool favorite;
+    for (Map row in rows) {
+      hasRead = (row[columnHasRead] == 1) ? true : false;
+      favorite = (row[columnFavorite] == 1) ? true : false;
+      BookData book = BookData(
+        id: row[columnId],
+        name: row[columnName],
+        num: row[columnNum],
+        service: row[columnService],
+        hasRead: hasRead,
+        favorite: favorite,
+        tag: row[columnTag],
+        memo: row[columnMemo],
+        urlSearch: row[columnUrlSearch],
+        urlImage: row[columnUrlImage],
+      );
+      books.add(book);
+    }
+    return books;
+  }
 
   // 更新処理
   Future<int> update(BookData book) async {
