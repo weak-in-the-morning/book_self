@@ -109,11 +109,11 @@ class _Register extends State<Register> {
             //お気に入りボタン
             IconButton(
               icon: (favorite
-                  ? Icon(
+                  ? const Icon(
                       Icons.star_rounded,
                       color: Colors.yellow,
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.star_border_rounded,
                       color: Colors.yellow,
                     )),
