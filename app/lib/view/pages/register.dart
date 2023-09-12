@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/view/components/app_button.dart';
 import 'package:app/view/components/input_field.dart';
-import 'package:app/view/components/ebooks.dart';
-import 'package:app/view/components/ebook_button.dart';
+//import 'package:app/view/components/ebooks.dart';
+//import 'package:app/view/components/ebook_button.dart';
 
 class Register extends StatefulWidget {
   @override

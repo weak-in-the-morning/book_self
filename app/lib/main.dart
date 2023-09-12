@@ -1,8 +1,8 @@
 import 'package:app/view/design_system.dart';
 import 'package:app/view/pages/setting.dart';
 import 'package:flutter/material.dart';
-import 'package:app/view/pages/bookshelf.dart';
-import 'package:app/view/pages/index.dart';
+//import 'package:app/view/pages/bookshelf.dart';
+//import 'package:app/view/pages/index.dart';
 import 'package:app/view/pages/register.dart';
 
 void main() {
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _pages = [
     const Index(),
-    const Register(),
+    Register(),
     const Bookshelf(),
     const Setting(),
   ];
