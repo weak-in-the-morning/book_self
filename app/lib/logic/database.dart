@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:uuid/uuid.dart';
 import 'package:app/data/book_data.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -79,12 +80,15 @@ class DatabaseHelper {
   }
 
   // 登録処理
+  // BookDataのidはデフォルトの空文字列から変更せずに渡す
   Future<int> insert(BookData book) async {
     Database? db = await instance.database;
+    const uuid = Uuid();
     final String now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     final int hasReadInt = book.hasRead ? 1 : 0;
     final int favoriteInt = book.favorite ? 1 : 0;
     Map<String, dynamic> row = {
+      DatabaseHelper.columnId: uuid.v4(),
       DatabaseHelper.columnName: book.name,
       DatabaseHelper.columnNum: book.num,
       DatabaseHelper.columnService: book.service,
@@ -107,26 +111,20 @@ class DatabaseHelper {
     List<BookData> books = [];
     bool hasRead;
     bool favorite;
-    DateTime created;
-    DateTime updated;
     for (Map row in rows) {
       hasRead = (row[columnHasRead] == 1) ? true : false;
       favorite = (row[columnFavorite] == 1) ? true : false;
-      created = DateFormat('yyyy-MM-dd HH:mm:ss').parse(row[columnCreated]);
-      updated = DateFormat('yyyy-MM-dd HH:mm:ss').parse(row[columnUpdated]);
       BookData book = BookData(
-        row[columnId],
-        row[columnName],
-        row[columnNum],
-        row[columnService],
-        hasRead,
-        favorite,
-        row[columnTag],
-        row[columnMemo],
-        created,
-        updated,
-        row[columnUrlSearch],
-        row[columnUrlImage],
+        id: row[columnId],
+        name: row[columnName],
+        num: row[columnNum],
+        service: row[columnService],
+        hasRead: hasRead,
+        favorite: favorite,
+        tag: row[columnTag],
+        memo: row[columnMemo],
+        urlSearch: row[columnUrlSearch],
+        urlImage: row[columnUrlImage],
       );
       books.add(book);
     }
@@ -150,7 +148,7 @@ class DatabaseHelper {
   // 更新処理
   Future<int> update(BookData book) async {
     Database? db = await instance.database;
-    int id = book.id;
+    String id = book.id;
     final String now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     final int hasReadInt = book.hasRead ? 1 : 0;
     final int favoriteInt = book.favorite ? 1 : 0;
