@@ -101,25 +101,37 @@ class DatabaseHelper {
   }
 
   // 照会処理
-  // Future<List<BookData>> queryAllRows() async {
-  //   Database? db = await instance.database;
-  //   data = await db!.query(table);
-  //   book = BookData(
-  //     id: data[columnId],
-  //     name: data[columnName],
-  //     num: data[columnNum],
-  //     service: data[columnService],
-  //     hasRead: data[columnHasRead],
-  //     favorite: data[columnFavorite],
-  //     tag: data[columnTag],
-  //     memo: data[columnMemo],
-  //     created: data[columnCreated],
-  //     updated: data[columnUpdated],
-  //     urlSearch: data[columnUrlSearch],
-  //     urlImag: data[columnUrlImage],
-  //   )
-  //   return book;
-  // }
+  Future<List<BookData>> queryAllRows() async {
+    Database? db = await instance.database;
+    List<Map> rows = await db!.query(table);
+    List<BookData> books = [];
+    bool hasRead;
+    bool favorite;
+    DateTime created;
+    DateTime updated;
+    for (Map row in rows) {
+      hasRead = (row[columnHasRead] == 1) ? true : false;
+      favorite = (row[columnFavorite] == 1) ? true : false;
+      created = DateFormat('yyyy-MM-dd HH:mm:ss').parse(row[columnCreated]);
+      updated = DateFormat('yyyy-MM-dd HH:mm:ss').parse(row[columnUpdated]);
+      BookData book = BookData(
+        row[columnId],
+        row[columnName],
+        row[columnNum],
+        row[columnService],
+        hasRead,
+        favorite,
+        row[columnTag],
+        row[columnMemo],
+        created,
+        updated,
+        row[columnUrlSearch],
+        row[columnUrlImage],
+      );
+      books.add(book);
+    }
+    return books;
+  }
 
   // レコード数を確認
   Future<int?> queryRowCount() async {
@@ -128,51 +140,43 @@ class DatabaseHelper {
         await db!.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
-  // // 更新処理
-  // Future<int> update(BookData book) async {
-  //   Database? db = await instance.database;
-  //   int id = book.id;
-  //   final String now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
-  //   final int hasReadInt = book.hasRead ? 1 : 0;
-  //   final int favoriteInt = book.favorite ? 1 : 0;
-  //   Map<String, dynamic> row = {
-  //     DatabaseHelper.columnName: book.name,
-  //     DatabaseHelper.columnNum: book.num,
-  //     DatabaseHelper.columnService: book.service,
-  //     DatabaseHelper.columnHasRead: hasReadInt,
-  //     DatabaseHelper.columnFavorite: favoriteInt,
-  //     DatabaseHelper.columnTag: book.tag,
-  //     DatabaseHelper.columnMemo: book.memo,
-  //     DatabaseHelper.columnCreated: now,
-  //     DatabaseHelper.columnUpdated: now,
-  //     DatabaseHelper.columnUrlSearch: book.urlSearch,
-  //     DatabaseHelper.columnUrlImage: book.urlImage,
-  //   };
-  //   return await db!
-  //       .update(table, row, where: '$columnId = ?', whereArgs: [id]);
-  // }
+  /* // レコードの検索
+  Future<List<BookData>?> searchName(String name) async {
+    Database? db = await instance.database;
+    List<Map> results =
+        await db!.query(table, where: "name = ?", whereArgs: [name]);
+  } */
+
+  // 更新処理
+  Future<int> update(BookData book) async {
+    Database? db = await instance.database;
+    int id = book.id;
+    final String now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    final int hasReadInt = book.hasRead ? 1 : 0;
+    final int favoriteInt = book.favorite ? 1 : 0;
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnName: book.name,
+      DatabaseHelper.columnNum: book.num,
+      DatabaseHelper.columnService: book.service,
+      DatabaseHelper.columnHasRead: hasReadInt,
+      DatabaseHelper.columnFavorite: favoriteInt,
+      DatabaseHelper.columnTag: book.tag,
+      DatabaseHelper.columnMemo: book.memo,
+      DatabaseHelper.columnUpdated: now,
+      DatabaseHelper.columnUrlSearch: book.urlSearch,
+    };
+    return await db!
+        .update(table, row, where: '$columnId = ?', whereArgs: [id]);
+  }
 
   // 削除処理
-  Future<int> delete(int id) async {
+  Future<int> deleteId(int id) async {
     Database? db = await instance.database;
     return await db!.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
 
-  // 時刻のformat
-  Future<DateTime> stringToDateTime(String time) async {
-    return DateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
-  }
-
-  Future<String> dateTimeToString(DateTime time) async {
-    return DateFormat("yyyy-MM-dd HH:mm:ss").format(time);
-  }
-
-  // boolのformat
-  Future<int> boolToInt(bool b) async {
-    return b ? 1 : 0;
-  }
-
-  Future<bool> intToBool(int i) async {
-    return i == 0 ? false : true;
+  Future<int> deleteName(String name) async {
+    Database? db = await instance.database;
+    return await db!.delete(table, where: '$columnName = ?', whereArgs: [name]);
   }
 }
