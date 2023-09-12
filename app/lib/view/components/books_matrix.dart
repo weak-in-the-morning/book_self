@@ -6,11 +6,10 @@ class BooksMatrix extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double firstPadding = 96;
-    const double secondPadding = 60;
-    const double thirdPadding = 60;
-    const double fourthPadding = 60;
-    return const Row(
+    final gap = MediaQuery.of(context).size.height / 72;
+    final topGap =  MediaQuery.of(context).size.height / 12;
+    // final topPadding = (mediaHeight - padding) / 6.0;
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Column(
@@ -19,8 +18,8 @@ class BooksMatrix extends StatelessWidget {
           // Text('My本棚'),
 
             Padding(
-              padding: EdgeInsets.only(top: firstPadding),
-              child: BooksRow(imgPaths: [
+              padding: EdgeInsets.only(top: topGap),
+              child: const BooksRow(imagePaths: [
                   'https://image.mechacomi.jp/contents/001fr2hw.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hx.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hy.jpg',
@@ -29,8 +28,8 @@ class BooksMatrix extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: secondPadding),
-              child: BooksRow(imgPaths: [
+              padding: EdgeInsets.only(top: gap),
+              child: const BooksRow(imagePaths: [
                   'https://image.mechacomi.jp/contents/001fr2hw.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hx.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hy.jpg',
@@ -39,8 +38,8 @@ class BooksMatrix extends StatelessWidget {
               )
             ),
             Padding(
-              padding: EdgeInsets.only(top: thirdPadding),
-              child: BooksRow(imgPaths: [
+              padding: EdgeInsets.only(top: gap),
+              child: const BooksRow(imagePaths: [
                   'https://image.mechacomi.jp/contents/001fr2hw.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hx.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hy.jpg',
@@ -49,8 +48,8 @@ class BooksMatrix extends StatelessWidget {
               )
             ),
             Padding(
-              padding: EdgeInsets.only(top: fourthPadding),
-              child: BooksRow(imgPaths: [
+              padding: EdgeInsets.only(top: gap),
+              child: const BooksRow(imagePaths: [
                   'https://image.mechacomi.jp/contents/001fr2hw.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hx.jpg',
                   'https://image.mechacomi.jp/contents/001fr2hy.jpg',

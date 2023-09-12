@@ -1,4 +1,3 @@
-import 'package:app/data/colors.dart';
 import 'package:flutter/material.dart';
 //以下サンプル画像
 const sampleImgPath =
@@ -13,23 +12,28 @@ const sampleImgPath3 =
 const sampleLabel3 = 'ラブライブ';
 
 class BookInBookshelf extends StatelessWidget {
-  final String imgPath;
+  final String imagePath;
   // final String imgSrc;
 
   const BookInBookshelf({
     super.key, 
-    required this.imgPath, 
+    required this.imagePath, 
     // required this.imgSrc,
     });
 
   @override
   Widget build(BuildContext context) {
+    final mediaWidth = MediaQuery.of(context).size.width;
+    final mediaHeight = MediaQuery.of(context).size.height;
+    final imageWidth = (mediaWidth - mediaWidth * 5 / 24) / 4;
+    final imageHeight = (mediaHeight - mediaHeight * 5 / 16) / 4;
+
     return 
       TextButton(
         onPressed: () {},
         child: Container(
             decoration: BoxDecoration(
-            color: AppColors.cobaltGreen, 
+            // color: AppColors.cobaltGreen, 
 
             // border:  Border.all(
             //     width: 2,
@@ -37,12 +41,12 @@ class BookInBookshelf extends StatelessWidget {
             //     ), 
             borderRadius: BorderRadius.circular(2), 
           ), 
-          width: 60,
-          height: 90,
-          child: Image.asset(
-            imgPath,
-            width: 60,
-            height: 90,
+          width: imageWidth,
+          height: imageHeight,
+          child: Image.network(
+            imagePath,
+            width: imageWidth,
+            height: imageHeight,
           ),
         ),
       );
