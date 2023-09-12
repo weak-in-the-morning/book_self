@@ -1,28 +1,23 @@
 class BookData {
-  int id = 0;
-  String name = "";
-  int num = 0;
-  String service = "";
-  bool hasRead = false;
-  bool favorite = false;
-  String tag = "";
-  String memo = "";
-  DateTime created = DateTime.now();
-  DateTime updated = DateTime.now();
-  String urlSearch = "";
-  String urlImage = "";
+  String name;
+  int num;
+  String service;
+  bool hasRead;
+  bool favorite;
+  String tag;
+  String memo;
+  String urlSearch;
+  String urlImage;
 
-  BookData(
-      this.id,
-      this.name,
-      this.num,
-      this.service,
-      this.hasRead,
-      this.favorite,
-      this.tag,
-      this.memo,
-      this.created,
-      this.updated,
-      this.urlSearch,
-      this.urlImage);
+  BookData({
+    required this.name,
+    required this.num,
+    required this.service,
+    required this.hasRead,
+    required this.favorite,
+    required this.tag,
+    required this.memo,
+    required this.urlSearch,
+    required this.urlImage,
+  });
 }
