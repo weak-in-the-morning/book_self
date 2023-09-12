@@ -1,9 +1,9 @@
-
 import 'dart:math';
 
 import 'package:app/data/book_data.dart';
 import 'package:app/logic/database.dart';
 import 'package:app/view/components/app_button.dart';
+import 'package:app/view/components/input_field.dart';
 import 'package:flutter/material.dart';
 
 //以下サンプル画像
@@ -21,13 +21,14 @@ const sampleImgPath3 =
 
 const sampleLabel3 = 'ラブライブ';
 
+/*
 class BookList extends StatelessWidget {
   const BookList({super.key});
   @override
   Widget build(BuildContext context) {
     final dbHelper = DatabaseHelper.instance;
     const axisCount = 3;
-
+    final TextEditingController searchFieldController = TextEditingController();
     return FutureBuilder<List<BookData>>(
       future: dbHelper.queryAllRows(),
       builder: (context, snapshot) {
@@ -37,26 +38,128 @@ class BookList extends StatelessWidget {
           return const Center(child: Text('Error occurred!'));
         } else {
           final books = snapshot.data!;
-          return GridView.count(
-            crossAxisCount: axisCount,
+          return Column(
             children: [
-              if (books.isEmpty) const Center(child: Text('data not found')),
-              for (int i = 0; i < books.length; i++) ...[
-                _Book(
-                  imagePath: sampleImgPath,
-                  label: books[i].name,
+              Row(
+                children: [
+                  InputField(
+                    formTitle: '検索',
+                    controller: searchFieldController,
+                    isSelectedEbook: true,
+                  ),
+                  AppButton.outlined(label: '検索', onTap: (){})
+                ],
+              ),
+              Flexible(
+                child: GridView.count(
+                  crossAxisCount: axisCount,
+                  children: [
+                    if (books.isEmpty)
+                      const Center(child: Text('data not found')),
+                    for (int i = 0; i < books.length; i++) ...[
+                      _Book(
+                        imagePath: sampleImgPath,
+                        label: books[i].name,
+                      ),
+                    ]
+                  ],
                 ),
-              ]
+              ),
             ],
           );
         }
       },
     );
+  }
+}
+*/
+class BookList extends StatefulWidget {
+  const BookList({super.key});
 
+  @override
+  _BookListState createState() => _BookListState();
+}
+
+class _BookListState extends State<BookList> {
+  final dbHelper = DatabaseHelper.instance;
+  final TextEditingController searchFieldController = TextEditingController();
+  late Future<List<BookData>?> booksFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    booksFuture = dbHelper.queryAllRows();
+  }
+
+  _updateBooks() {
+    if (searchFieldController.text.isEmpty) {
+      setState(() {
+        booksFuture = dbHelper.queryAllRows();
+      });
+    } else {
+      setState(() {
+        booksFuture = dbHelper.searchName(searchFieldController.text);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const axisCount = 3;
+    return FutureBuilder<List<BookData>>(
+      future: dbHelper.queryAllRows(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: Text('Loading!'));
+        } else if (snapshot.error != null) {
+          return const Center(child: Text('Error occurred!'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No data found'));
+        } else {
+          final books = snapshot.data ?? [];
+          return Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: InputField(
+                      formTitle: '検索',
+                      controller: searchFieldController,
+                      isSelectedEbook: true,
+                    ),
+                  ),
+                  AppButton.outlined(
+                      label: '検索',
+                      onTap: () {
+                        _updateBooks();
+                      })
+                ],
+              ),
+              Flexible(
+                child: GridView.count(
+                  crossAxisCount: axisCount,
+                  children: [
+                    if (books.isEmpty)
+                      const Center(child: Text('data not found')),
+                    for (int i = 0; i < books.length; i++) ...[
+                      _Book(
+                        imagePath: sampleImgPath,
+                        label: books[i].name,
+                      ),
+                    ]
+                  ],
+                ),
+              ),
+            ],
+          );
+        }
+      },
+    );
   }
 }
 
-// ignore: camel_case_types
 class _Book extends StatelessWidget {
   const _Book({required this.imagePath, required this.label});
 

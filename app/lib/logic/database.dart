@@ -189,7 +189,7 @@ class DatabaseHelper {
   }
 
   // 削除処理
-  Future<int> deleteId(int id) async {
+  Future<int> deleteId(String id) async {
     Database? db = await instance.database;
     return await db!.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
