@@ -30,6 +30,12 @@ class _Register extends State<Register> {
     'assets/images/DMMBooks.png'
   ];
 
+  void _handleCheckbox(bool? e) {
+    setState(() {
+      hasRead = e!;
+    });
+  }
+
   //電子書籍のボタン
   Widget eBookButton({
     required int index,
@@ -75,7 +81,7 @@ class _Register extends State<Register> {
     final TextEditingController controllerNum =
         TextEditingController(text: '初期値');
     final TextEditingController controllerURL =
-        TextEditingController(text: '紙の本');
+        TextEditingController(text: '紙の本は不要');
     final TextEditingController controllerTag =
         TextEditingController(text: '初期値');
     final TextEditingController controllerMemo =
@@ -89,6 +95,7 @@ class _Register extends State<Register> {
         InputField(formTitle: '巻数', controller: controllerNum),
         const Text('電子書籍サービス一覧'),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ...List.generate(
               bookStores.length - 1,
@@ -101,10 +108,15 @@ class _Register extends State<Register> {
           ],
         ),
         //ここあとで紙の時は入力不可に
-        InputField(formTitle: 'URL', controller: controllerURL),
+        InputField(
+          formTitle: 'URL',
+          controller: controllerURL,
+          isSelectedEbook: selectedBookstoreIndex != 4,
+        ),
         InputField(formTitle: 'タグ', controller: controllerTag),
         InputField(formTitle: 'メモ', controller: controllerMemo),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //お気に入りボタン
             IconButton(
@@ -124,8 +136,19 @@ class _Register extends State<Register> {
               },
               iconSize: 50,
             ),
+            //既読ボタン
+            Column(children: [
+              Icon(
+                hasRead ? Icons.bookmark_add : Icons.bookmark_border_outlined,
+                size: 30,
+              ),
+              Checkbox(
+                activeColor: Colors.blue,
+                value: hasRead,
+                onChanged: _handleCheckbox,
+              )
+            ])
           ],
-          //既読ボタン
         ),
         (AppButton.filled(
             label: '登録',
@@ -135,8 +158,9 @@ class _Register extends State<Register> {
               num = int.parse(controllerNum.text);
               service = bookStores[selectedBookstoreIndex];
               urlSearch =
-                  (controllerURL.text == '紙の本') ? '' : controllerURL.text;
+                  (controllerURL.text == '紙の本は不要') ? '' : controllerURL.text;
               tag = controllerTag.text;
+              memo = controllerMemo.text;
             })),
       ],
     ));
