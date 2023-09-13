@@ -21,7 +21,7 @@ class BookData {
     this.tag,
     this.memo,
     required this.urlSearch,
-    this.urlImage,
+    this.urlImage = "",
   });
 
   @override
