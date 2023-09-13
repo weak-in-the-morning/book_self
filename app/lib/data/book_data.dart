@@ -21,6 +21,6 @@ class BookData {
     required this.tag,
     required this.memo,
     required this.urlSearch,
-    required this.urlImage,
+    this.urlImage = "",
   });
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/logic/get_book_data.dart';
 import 'package:uuid/uuid.dart';
 import 'package:app/data/book_data.dart';
 import 'package:path/path.dart';
@@ -87,6 +88,7 @@ class DatabaseHelper {
     final String now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     final int hasReadInt = book.hasRead ? 1 : 0;
     final int favoriteInt = book.favorite ? 1 : 0;
+    String urlImage = await getBookImageUrl(book.name);
     Map<String, dynamic> row = {
       DatabaseHelper.columnId: uuid.v4(),
       DatabaseHelper.columnName: book.name,
@@ -99,7 +101,7 @@ class DatabaseHelper {
       DatabaseHelper.columnCreated: now,
       DatabaseHelper.columnUpdated: now,
       DatabaseHelper.columnUrlSearch: book.urlSearch,
-      DatabaseHelper.columnUrlImage: book.urlImage,
+      DatabaseHelper.columnUrlImage: urlImage,
     };
     return await db!.insert(table, row);
   }
