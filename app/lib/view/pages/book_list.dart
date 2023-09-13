@@ -1,5 +1,8 @@
+
 import 'dart:math';
 
+import 'package:app/data/book_data.dart';
+import 'package:app/logic/database.dart';
 import 'package:app/view/components/app_button.dart';
 import 'package:flutter/material.dart';
 
@@ -20,36 +23,42 @@ const sampleLabel3 = 'ラブライブ';
 
 class BookList extends StatelessWidget {
   const BookList({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final dbHelper = DatabaseHelper.instance;
     const axisCount = 3;
-    return GridView.count(
-      crossAxisCount: axisCount,
-      children: [
-        // sample画像を繰り返し表示する3種類 * 50 = 150個描画されている
-        for (int i = 0; i < 50; i++) ...[
-          const _book(
-            imagePath: sampleImgPath,
-            label: sampleLabel,
-          ),
-          const _book(
-            imagePath: sampleImgPath2,
-            label: sampleLabel2,
-          ),
-          const _book(
-            imagePath: sampleImgPath3,
-            label: sampleLabel3,
-          ),
-        ]
-      ],
+
+    return FutureBuilder<List<BookData>>(
+      future: dbHelper.queryAllRows(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: Text('Loading!'));
+        } else if (snapshot.error != null) {
+          return const Center(child: Text('Error occurred!'));
+        } else {
+          final books = snapshot.data!;
+          return GridView.count(
+            crossAxisCount: axisCount,
+            children: [
+              if (books.isEmpty) const Center(child: Text('data not found')),
+              for (int i = 0; i < books.length; i++) ...[
+                _Book(
+                  imagePath: sampleImgPath,
+                  label: books[i].name,
+                ),
+              ]
+            ],
+          );
+        }
+      },
     );
+
   }
 }
 
 // ignore: camel_case_types
-class _book extends StatelessWidget {
-  const _book({required this.imagePath, required this.label});
+class _Book extends StatelessWidget {
+  const _Book({required this.imagePath, required this.label});
 
   final String imagePath;
   final String label;
@@ -106,10 +115,7 @@ class _book extends StatelessWidget {
                 height: imgWidth * 2,
               ),
             ),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 12)
-            )
+            Text(label, style: const TextStyle(fontSize: 12))
           ],
         ),
       ),
